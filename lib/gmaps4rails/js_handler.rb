@@ -47,7 +47,11 @@ module Gmaps4rails
 
   def Gmaps4rails.create_direction_js(hash, map_id)
     output = Array.new
-    output << "#{map_id}.direction_conf.origin = '#{hash["data"]["from"]}';"
+    if (hash["data"]["from"] == 'origin')
+    	output << "#{map_id}.direction_conf.origin = #{map_id}.map.userLocation;"
+    else
+    	output << "#{map_id}.direction_conf.origin = '#{hash["data"]["from"]}';"
+    end
     output << "#{map_id}.direction_conf.destination = '#{hash["data"]["to"]}';"
     hash[:options] ||= Array.new
 	  hash[:options].each do |option_k, option_v|
